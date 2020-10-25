@@ -316,6 +316,17 @@ public class billGenerator extends JFrame implements ActionListener {
                 }
                 ps.setString(9, String.valueOf(bID));
                 ps.addBatch();
+
+		String qwry2 = "select aq from commodities where id = '"+t6.getText()+"'";
+                ResultSet rs2 = c.s.executeQuery(qwry2);
+                while(rs2.next()){
+                    availableq = rs2.getString(1);
+                }
+
+                float aQuant = Float.parseFloat(availableq) - quant;
+                String avQuant = String.valueOf(aQuant);
+                String qwry3 = "update commodities set aq = '"+avQuant+"' where id = '"+t6.getText()+"'";
+                c.s.executeUpdate(qwry3);
             } catch (Exception e) {
                 System.out.println(e);
             }
