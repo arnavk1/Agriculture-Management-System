@@ -224,7 +224,7 @@ public class dashboard extends JFrame implements ActionListener,MouseListener,Co
         }else if(ae.getSource() == b4){
             
         }else if(ae.getSource() == b5){
-            
+            new addCommodities().setVisible(true);
         }else if(ae.getSource() == b6){
             new billGenerator().setVisible(true);
         }else if(ae.getSource() == b7){
