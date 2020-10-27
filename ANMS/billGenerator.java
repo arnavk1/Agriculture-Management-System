@@ -25,7 +25,7 @@ public class billGenerator extends JFrame implements ActionListener {
     float tPrice = 0;
     float subtotal = 1;
     Connection consn;
-    PreparedStatement ps;
+    PreparedStatement ps, ps2;
     int bID;
     DefaultTableModel  model;
 
@@ -283,9 +283,11 @@ public class billGenerator extends JFrame implements ActionListener {
 
         try {
             String st = "insert into bills(id, name, type, price, quantity, subtotal, date, time, bID) values(?,?,?,?,?,?,?,?,?)";
+            String st2 = "delete from bills where id = ? and name = ? and quantity = ? and time = ?";
             Class.forName("com.mysql.jdbc.Driver");
             consn = DriverManager.getConnection("jdbc:mysql://localhost:3306/projectanms", "root", "rootroot");
             ps = consn.prepareStatement(st);
+            ps2 = consn.prepareStatement(st2);
         } catch (Exception e) {
         }
 
@@ -300,7 +302,7 @@ public class billGenerator extends JFrame implements ActionListener {
             String tPrice1 = String.valueOf(tPrice);
             t11.setText(tPrice1);
             try {
-                ps.setString(1, t6.getText());
+                ps.setString(1, t1.getText());
                 ps.setString(2, t7.getText());
                 ps.setString(3, t8.getText());
                 ps.setString(4, t9.getText());
@@ -335,6 +337,26 @@ public class billGenerator extends JFrame implements ActionListener {
             t8.setText("");
             t9.setText("");
             t10.setText("");
+        });
+
+        delete3.addActionListener(ae -> {
+            try {
+                float totalAmt = Float.parseFloat(t11.getText());
+                int row = ta1.getSelectedRow();
+                model = (DefaultTableModel) ta1.getModel();
+                model.removeRow(row);
+                String a = String.valueOf(model.getValueAt(row, 0));
+                String b = String.valueOf(model.getValueAt(row, 2));
+                ps2.setString(1, t1.getText());
+                ps2.setString(2, a);
+                ps2.setString(3, b);
+                ps2.setString(4, time.getText());
+                ps2.addBatch();
+                float newTotal = totalAmt - Float.parseFloat(String.valueOf(model.getValueAt(row, 4)));
+                t11.setText(String.valueOf(newTotal));
+            } catch (Exception e) {
+                //TODO: handle exception
+            }
         });
 
         ImageIcon ii4 = new ImageIcon(getClass().getResource("\\Icons\\save.png"));
@@ -440,6 +462,9 @@ public class billGenerator extends JFrame implements ActionListener {
         b4.setBounds(870, 625, 100, 30);
         b4.addActionListener(ae -> {
             this.setVisible(false);
+            try {
+                ps.clearBatch();
+            } catch (SQLException e) {}
         });
         img.add(b4);
 

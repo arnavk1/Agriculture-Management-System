@@ -222,7 +222,7 @@ public class dashboard extends JFrame implements ActionListener,MouseListener,Co
         }else if(ae.getSource() == b3){
             new addCrop().setVisible(true);
         }else if(ae.getSource() == b4){
-            
+            new addFertilizer().setVisible(true);
         }else if(ae.getSource() == b5){
             new addCommodities().setVisible(true);
         }else if(ae.getSource() == b6){

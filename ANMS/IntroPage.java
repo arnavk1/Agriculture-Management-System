@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
 
+//This is the First Page
+
 public class IntroPage extends JWindow implements ActionListener {
     JButton b1;
     JLabel l1, l2, l3, l4;

@@ -137,10 +137,10 @@ public class addCrop extends JFrame implements ActionListener {
         c3 = new Choice();
         try {
             conn cc = new conn();
-            String qry3 = "Select * from fert";
+            String qry3 = "Select * from addFert";
             ResultSet rs3 = cc.s.executeQuery(qry3);
             while(rs3.next()){
-                c3.add(rs3.getString("name"));
+                c3.add(rs3.getString("type"));
             }
         } catch (Exception e) {}
         c3.setBounds(250, 480, 190, 30);
