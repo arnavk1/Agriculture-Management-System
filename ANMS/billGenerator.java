@@ -22,7 +22,7 @@ public class billGenerator extends JFrame implements ActionListener {
     JButton b1, b2, b3, b4;
     JTable ta1;
     JScrollPane pane;
-    float tPrice = 0;
+    float tPrice;
     float subtotal = 1;
     Connection consn;
     PreparedStatement ps, ps2;
@@ -233,6 +233,13 @@ public class billGenerator extends JFrame implements ActionListener {
         sep3.setBounds(0, 400, 1000, 20);
         img.add(sep3);
 
+        ImageIcon delete1 = new ImageIcon(getClass().getResource("\\Icons\\delete.png"));
+        Image delete2 = delete1.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
+        delete3 = new JButton(new ImageIcon(delete2));
+        delete3.setBounds(450, 405, 30, 30);
+        delete3.setBackground(Color.white);
+        img.add(delete3);
+
         DefaultTableModel d = new DefaultTableModel();
         d.addColumn("Name");
         d.addColumn("Type");
@@ -255,6 +262,7 @@ public class billGenerator extends JFrame implements ActionListener {
         img.add(l16);
 
         t11 = new JTextField();
+        t11.setText("0.0");
         t11.setBounds(700, 505, 150, 30);
         img.add(t11);
 
@@ -298,7 +306,7 @@ public class billGenerator extends JFrame implements ActionListener {
             String stotal = String.valueOf(subtotal);
             model = (DefaultTableModel) ta1.getModel();
             model.addRow(new Object[] { t7.getText(), t8.getText(), t10.getText(), t9.getText(), subtotal });
-            tPrice = tPrice + subtotal;
+            tPrice = Float.parseFloat(t11.getText()) + subtotal;
             String tPrice1 = String.valueOf(tPrice);
             t11.setText(tPrice1);
             try {
@@ -344,7 +352,6 @@ public class billGenerator extends JFrame implements ActionListener {
                 float totalAmt = Float.parseFloat(t11.getText());
                 int row = ta1.getSelectedRow();
                 model = (DefaultTableModel) ta1.getModel();
-                model.removeRow(row);
                 String a = String.valueOf(model.getValueAt(row, 0));
                 String b = String.valueOf(model.getValueAt(row, 2));
                 ps2.setString(1, t1.getText());
@@ -354,9 +361,8 @@ public class billGenerator extends JFrame implements ActionListener {
                 ps2.addBatch();
                 float newTotal = totalAmt - Float.parseFloat(String.valueOf(model.getValueAt(row, 4)));
                 t11.setText(String.valueOf(newTotal));
-            } catch (Exception e) {
-                //TODO: handle exception
-            }
+                model.removeRow(row);
+            } catch (Exception e) {}
         });
 
         ImageIcon ii4 = new ImageIcon(getClass().getResource("\\Icons\\save.png"));
