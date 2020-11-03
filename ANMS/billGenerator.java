@@ -326,18 +326,7 @@ public class billGenerator extends JFrame implements ActionListener {
                 }
                 ps.setString(9, String.valueOf(bID));
                 ps.addBatch();
-
-		String qwry2 = "select aq from commodities where id = '"+t6.getText()+"'";
-                ResultSet rs2 = c.s.executeQuery(qwry2);
-                while(rs2.next()){
-                    availableq = rs2.getString(1);
-                }
-
-                float aQuant = Float.parseFloat(availableq) - quant;
-                String avQuant = String.valueOf(aQuant);
-                String qwry3 = "update commodities set aq = '"+avQuant+"' where id = '"+t6.getText()+"'";
-                c.s.executeUpdate(qwry3);
-            } catch (Exception e) {
+            }catch (Exception e) {
                 System.out.println(e);
             }
             t6.setText("");
@@ -383,6 +372,9 @@ public class billGenerator extends JFrame implements ActionListener {
                 c.s.executeUpdate(qwry);
                 ps.executeBatch();
 
+                int id = 0;
+                String availableq = "";
+
                 String name = t2.getText();
                 String Phone = t3.getText();
                 String email = t4.getText();
@@ -414,6 +406,22 @@ public class billGenerator extends JFrame implements ActionListener {
                         tb1.addCell(r);
                         tb1.addCell(s);
                         tb1.addCell(t);
+
+                        try {
+                            String qwry2 = "select co.aq from commodities co,crops c where c.id in(select id from crops where cName = '"+ p +"') and co.id = c.id";
+                            ResultSet rs2 = c.s.executeQuery(qwry2);
+                            while (rs2.next()) {
+                                availableq = rs2.getString(1);
+                            }
+
+                            float aQuant = Float.parseFloat(availableq) - Float.parseFloat(r);
+                            String avQuant = String.valueOf(aQuant);
+                            String qwry3 = "update commodities set aq = '" + avQuant + "' where id in(select id from crops where cName = '"+ p + "')";
+                            c.s.executeUpdate(qwry3);
+                        } catch (SQLException e) {
+                            System.out.println(e);
+                        }
+                        
                     }
                     doc.add(tb1);
                     Paragraph p3 = new Paragraph("\nTotal: "+t11.getText()+"\nPaid Amount: "+t12.getText()+"\nReturned Amount: "+t13.getText());
