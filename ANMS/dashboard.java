@@ -235,8 +235,7 @@ public class dashboard extends JFrame implements ActionListener,MouseListener,Co
                 new loginPage().setVisible(true);
             }
         }else if(ae.getActionCommand().equals("Reception")){
-            new IntroPage().setVisible(true);
-            this.setVisible(false);
+            new reception().setVisible(true);
         }else if(ae.getActionCommand().equals("About")){
             new IntroPage().setVisible(true);
             this.setVisible(false);
