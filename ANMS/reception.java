@@ -72,10 +72,10 @@ public class reception extends JFrame implements ActionListener{
             new showFarmers().setVisible(true);
         }
         if(ae.getSource() == commodity){
-
+	    new showCommodities().setVisible(true);
         }
         if(ae.getSource() == customer){
-
+	    new showCustomers().setVisible(true);
         }
         if(ae.getSource() == bill){
 
