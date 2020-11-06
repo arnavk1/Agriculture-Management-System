@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class reception extends JFrame implements ActionListener{
     
-    JButton emp, farm, customer, commodity, bill;
+    JButton cust, emp, farm, customer, commodity, bill;
     
     reception(){
 
@@ -16,38 +16,45 @@ public class reception extends JFrame implements ActionListener{
         rDash.setBounds(200, 0, 800, 700);
         add(rDash);
 
+        cust = new JButton("Customer");
+        cust.setBackground(Color.black);
+        cust.setForeground(Color.white);
+        cust.setBounds(30, 30, 150, 30);
+        cust.addActionListener(this);
+        add(cust);
+
         emp = new JButton("Employee");
         emp.setBackground(Color.black);
         emp.setForeground(Color.white);
-        emp.setBounds(30, 30, 150, 30);
+        emp.setBounds(30, 100, 150, 30);
         emp.addActionListener(this);
         add(emp);
 
         farm = new JButton("Farmer");
         farm.setBackground(Color.black);
         farm.setForeground(Color.white);
-        farm.setBounds(30, 100, 150, 30);
+        farm.setBounds(30, 170, 150, 30);
         farm.addActionListener(this);
         add(farm);
 
         commodity = new JButton("Commodities");
         commodity.setBackground(Color.black);
         commodity.setForeground(Color.white);
-        commodity.setBounds(30, 170, 150, 30);
+        commodity.setBounds(30, 240, 150, 30);
         commodity.addActionListener(this);
         add(commodity);
 
         customer = new JButton("Customer");
         customer.setBackground(Color.black);
         customer.setForeground(Color.white);
-        customer.setBounds(30, 240, 150, 30);
+        customer.setBounds(30, 310, 150, 30);
         customer.addActionListener(this);
         add(customer);
         
         bill = new JButton("Bills");
         bill.setBackground(Color.black);
         bill.setForeground(Color.white);
-        bill.setBounds(30, 310, 150, 30);
+        bill.setBounds(30, 380, 150, 30);
         bill.addActionListener(this);
         add(bill);
 
@@ -65,6 +72,9 @@ public class reception extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent ae) {
+        if(ae.getSource() == cust){
+            new addCustomer().setVisible(true);
+        }
         if(ae.getSource() == emp){
             new showEmployee().setVisible(true);
         }
