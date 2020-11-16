@@ -368,9 +368,10 @@ public class billGenerator extends JFrame implements ActionListener {
                     bID += 1;
                 }
                 String qwry = "insert into billdetail values('" + bID + "','" + t11.getText() + "','" + t12.getText()
-                        + "','" + t13.getText() + "')";
+                        + "','" + t13.getText() + "','" + dt.getText()+ "','" + time.getText() + "')";
                 c.s.executeUpdate(qwry);
                 ps.executeBatch();
+                ps2.executeBatch();
 
                 int id = 0;
                 String availableq = "";
