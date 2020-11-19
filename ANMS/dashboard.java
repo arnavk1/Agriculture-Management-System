@@ -31,9 +31,16 @@ public class dashboard extends JFrame implements ActionListener,MouseListener,Co
         m2.setForeground(Color.BLUE);
         
         i1 = new JMenuItem("Reception");
+        ImageIcon imgi1 = new ImageIcon(getClass().getResource("\\Icons\\reception.png"));
+        Image imgi2 = imgi1.getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT);
+        i1.setIcon(new ImageIcon(imgi2));
         i1.addActionListener(this);
         m1.add(i1);
-        i2 = new JMenuItem("About");
+
+        i2 = new JMenuItem("About");  
+        ImageIcon imgi3 = new ImageIcon(getClass().getResource("\\Icons\\about.png"));
+        Image imgi4 = imgi3.getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT);
+        i2.setIcon(new ImageIcon(imgi4));
         i2.addActionListener(this);
         m2.add(i2);
 

@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class reception extends JFrame implements ActionListener{
     
-    JButton cust, emp, farm, customer, commodity, bill;
+    JButton cust, emp, farm, customer, commodity, bill, cancel;
     
     reception(){
 
@@ -58,6 +58,21 @@ public class reception extends JFrame implements ActionListener{
         bill.addActionListener(this);
         add(bill);
 
+        cancel = new JButton("Cancel");
+        cancel.setBackground(Color.black);
+        cancel.setForeground(Color.white);
+        cancel.setBounds(30, 450, 150, 30);
+        cancel.addActionListener(ae -> {
+            this.setVisible(false);
+        });
+
+        ImageIcon im1 = new ImageIcon(getClass().getResource("\\Icons\\recep.jpg"));
+        Image im2 = im1.getImage().getScaledInstance(210, 180, Image.SCALE_DEFAULT);
+        ImageIcon im3 = new ImageIcon(im2);
+        JLabel img3 = new JLabel(im3);
+        img3.setBounds(-5, 500, 210, 180);
+        add(img3);
+
         getContentPane().setBackground(Color.WHITE);
 
         setUndecorated(true);
@@ -88,7 +103,7 @@ public class reception extends JFrame implements ActionListener{
 	    new showCustomers().setVisible(true);
         }
         if(ae.getSource() == bill){
-
+            new showBill().setVisible(true);
         }
     }
 }
