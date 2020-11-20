@@ -200,8 +200,9 @@ public class showBill extends JFrame implements ActionListener{
             if(dcb.isSelected()){
                 
                 try {
+                    String datel = c1.getSelectedItem();
                     conn c = new conn();
-                    String qry = "select distinct date from bills where id = " + idl.getText();
+                    String qry = "select distinct bID, id from bills where date = '" + datel +"' and id = '" + idl.getText() + "'";
                     ResultSet rs = c.s.executeQuery(qry);
                     while (rs.next()) {
                         c1.add(rs.getString("date"));
