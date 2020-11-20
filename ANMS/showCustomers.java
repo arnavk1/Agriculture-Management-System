@@ -60,7 +60,7 @@ public class showCustomers extends JFrame implements ActionListener{
             tm.setRowCount(0);
             conn c = new conn();
             try {
-                ResultSet rs = c.s.executeQuery("select * from customer = '"+idField.getText()+"'");
+                ResultSet rs = c.s.executeQuery("select * from customer where id = '"+idField.getText()+"'");
                 while(rs.next()){
                     tm.addRow(new Object[] { rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)});
                 }
