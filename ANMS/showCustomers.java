@@ -58,6 +58,7 @@ public class showCustomers extends JFrame implements ActionListener{
 
         idField.addActionListener(ae -> {
             tm.setRowCount(0);
+            System.out.println(idField.getText());
             conn c = new conn();
             try {
                 ResultSet rs = c.s.executeQuery("select * from customer where id = '"+idField.getText()+"'");

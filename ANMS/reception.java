@@ -16,7 +16,7 @@ public class reception extends JFrame implements ActionListener{
         rDash.setBounds(200, 0, 800, 700);
         add(rDash);
 
-        cust = new JButton("Customer");
+        cust = new JButton("Add Customer");
         cust.setBackground(Color.black);
         cust.setForeground(Color.white);
         cust.setBounds(30, 30, 150, 30);
@@ -65,6 +65,7 @@ public class reception extends JFrame implements ActionListener{
         cancel.addActionListener(ae -> {
             this.setVisible(false);
         });
+        add(cancel);
 
         ImageIcon im1 = new ImageIcon(getClass().getResource("\\Icons\\recep.jpg"));
         Image im2 = im1.getImage().getScaledInstance(210, 180, Image.SCALE_DEFAULT);
@@ -79,7 +80,6 @@ public class reception extends JFrame implements ActionListener{
         setLayout(null);
         setBounds(480, 100, 1000, 700);
         setVisible(true);
-        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     public static void main(String[] args) {
         new reception().setVisible(true);
@@ -97,10 +97,10 @@ public class reception extends JFrame implements ActionListener{
             new showFarmers().setVisible(true);
         }
         if(ae.getSource() == commodity){
-	    new showCommodities().setVisible(true);
+            new showCommodities().setVisible(true);
         }
         if(ae.getSource() == customer){
-	    new showCustomers().setVisible(true);
+            new showCustomers().setVisible(true);
         }
         if(ae.getSource() == bill){
             new showBill().setVisible(true);

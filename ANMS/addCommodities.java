@@ -1,14 +1,10 @@
 package ANMS;
 
-import javax.sound.sampled.Line;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
-
-import com.mysql.cj.xdevapi.Result;
-
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.ResultSet;
+import java.sql.*;
 
 public class addCommodities extends JFrame implements ActionListener{
     JLabel l1, l2, l3, l4, l5, l6, name, type, aq;
@@ -117,7 +113,7 @@ public class addCommodities extends JFrame implements ActionListener{
         sp2.setForeground(Color.RED);
         bgimg.add(sp2);
 
-        b1 = new JButton("Add");
+        b1 = new JButton("Update");
         b1.setFont(new Font("Tahoma", Font.PLAIN, 18));
         b1.setForeground(Color.RED);
         b1.setBackground(new Color(255,255,255));
@@ -129,7 +125,7 @@ public class addCommodities extends JFrame implements ActionListener{
         b2 = new JButton("Cancel");
         b2.setFont(new Font("Tahoma", Font.PLAIN, 18));
         b2.setForeground(Color.RED);
-        b2.setBackground(new Color(255,255,255));
+        b2.setBackground(new Color(255,255,230));
         b2.setBounds(300, 480, 100, 30);
         b2.setBorder(new LineBorder(Color.ORANGE,3));
         b2.addActionListener(ae -> {

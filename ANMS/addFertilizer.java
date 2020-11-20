@@ -187,6 +187,8 @@ public class addFertilizer extends JFrame implements ActionListener{
                 type.setText("");
                 aq.setText("");
                 uq.setText("");
+                adequate.setVisible(false);
+                lowLevel.setVisible(false);
             } catch (Exception e) {}
         }
     }

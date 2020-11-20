@@ -3,7 +3,6 @@ package ANMS;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
-
 import javax.swing.*;
 
 
@@ -63,7 +62,7 @@ public class dashboard extends JFrame implements ActionListener,MouseListener,Co
 
         JLabel l2 = new JLabel("Welcome, "+name);
         l2.setBounds(70, 80, 500, 40);
-        l2.setForeground(Color.white);
+        l2.setForeground(Color.red);
         l2.setFont(new Font("Tahoma", Font.ITALIC, 36));
         l1.add(l2);
         

@@ -113,7 +113,7 @@ public class addCrop extends JFrame implements ActionListener {
         l9.setBounds(113, 360, 120, 30);
         img.add(l9);
 
-        cb1 = new JComboBox(new String[] {"Vegetable","Fruits","Cereal","Seeds"});
+        cb1 = new JComboBox(new String[] {"Vegetable","Fruits","Crops","Seeds"});
         cb1.setBackground(Color.white);
         cb1.setBounds(250, 360, 150, 30);
         img.add(cb1);
@@ -206,11 +206,12 @@ public class addCrop extends JFrame implements ActionListener {
             String cName = t4.getText();
             String fUsed = (String)c3.getSelectedItem();
             String price = t5.getText();
-            String availability = "true";
-            String qwry = "insert into crops values('"+id+"','"+type+"','"+sIn+"','"+hIn+"','"+variety+"','"+cName+"','"+fUsed+"','"+price+"','"+availability+"')";
+            String qwry = "insert into crops values('"+id+"','"+type+"','"+sIn+"','"+hIn+"','"+variety+"','"+cName+"','"+fUsed+"','"+price+"')";
+            String qwry2 = "insert into commodities values('"+ id + "','" + 0 + "')";
             try {
                 conn c = new conn();
                 c.s.executeUpdate(qwry);
+                c.s.executeUpdate(qwry2);
                 JOptionPane.showMessageDialog(this, "New Crop Has been added");
                 this.setVisible(false);
             } catch (Exception e) {} 

@@ -19,15 +19,17 @@ import java.time.format.DateTimeFormatter;
 public class billGenerator extends JFrame implements ActionListener {
     JLabel l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11, l12, l13, l14, l15, l16, l17, l18;
     JTextField t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13;
-    JButton b1, b2, b3, b4;
+    JButton b1, b2, b3, b4, delete3;
     JTable ta1;
     JScrollPane pane;
     float tPrice;
     float subtotal = 1;
+    float aQuant = 0;
+    
     Connection consn;
     PreparedStatement ps, ps2;
     int bID;
-    DefaultTableModel  model;
+    DefaultTableModel model;
 
     billGenerator() {
         ImageIcon i1 = new ImageIcon(getClass().getResource("\\Icons\\billing background.png"));
@@ -225,7 +227,6 @@ public class billGenerator extends JFrame implements ActionListener {
         ImageIcon ii3 = new ImageIcon(getClass().getResource("\\Icons\\add.png"));
         Image ii2 = ii3.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
         b1 = new JButton("Add", new ImageIcon(ii2));
-
         b1.setBounds(860, 360, 80, 30);
         img.add(b1);
 
@@ -306,8 +307,9 @@ public class billGenerator extends JFrame implements ActionListener {
             String stotal = String.valueOf(subtotal);
             model = (DefaultTableModel) ta1.getModel();
             model.addRow(new Object[] { t7.getText(), t8.getText(), t10.getText(), t9.getText(), subtotal });
-            tPrice = Float.parseFloat(t11.getText()) + subtotal;
+            tPrice = Float.parseFloat(t11.getText())+ subtotal;
             String tPrice1 = String.valueOf(tPrice);
+
             t11.setText(tPrice1);
             try {
                 ps.setString(1, t1.getText());
@@ -326,7 +328,7 @@ public class billGenerator extends JFrame implements ActionListener {
                 }
                 ps.setString(9, String.valueOf(bID));
                 ps.addBatch();
-            }catch (Exception e) {
+            } catch (Exception e) {
                 System.out.println(e);
             }
             t6.setText("");
@@ -351,7 +353,9 @@ public class billGenerator extends JFrame implements ActionListener {
                 float newTotal = totalAmt - Float.parseFloat(String.valueOf(model.getValueAt(row, 4)));
                 t11.setText(String.valueOf(newTotal));
                 model.removeRow(row);
-            } catch (Exception e) {}
+            } catch (Exception e) {
+                //TODO: handle exception
+            }
         });
 
         ImageIcon ii4 = new ImageIcon(getClass().getResource("\\Icons\\save.png"));
@@ -367,13 +371,13 @@ public class billGenerator extends JFrame implements ActionListener {
                     bID = rs.getInt(1);
                     bID += 1;
                 }
-                String qwry = "insert into billdetail values('" + bID + "','" + t11.getText() + "','" + t12.getText()
+                String qwry1 = "insert into billdetail values('" + bID + "','" + t11.getText() + "','" + t12.getText()
                         + "','" + t13.getText() + "','" + dt.getText() + "')";
-                c.s.executeUpdate(qwry);
+                c.s.executeUpdate(qwry1);
+
                 ps.executeBatch();
                 ps2.executeBatch();
 
-                int id = 0;
                 String availableq = "";
 
                 String name = t2.getText();
@@ -385,9 +389,12 @@ public class billGenerator extends JFrame implements ActionListener {
                     com.itextpdf.text.Document doc = new com.itextpdf.text.Document();
                     PdfWriter.getInstance(doc, new FileOutputStream(path + "" + name + " " + dt.getText() + ".pdf"));
                     doc.open();
-                    Paragraph p1 = new Paragraph("                                           Agriculture Management System\n                                         Contact Number: (+91)8708212700\n\n");
+                    Paragraph p1 = new Paragraph(
+                            "                                           Agriculture Management System\n                                         Contact Number: (+91)8708212700\n\n");
                     doc.add(p1);
-                    Paragraph p2 = new Paragraph("Billing ID: "+bID+"\nDate and Time: "+dt.getText()+"   "+ time.getText()+"\nBuyer Details:\nName: "+name+"\nContact No.:(+91)"+Phone+"\nEmail: "+email+"\nAddress: "+address+"\n\n");
+                    Paragraph p2 = new Paragraph("Billing ID: " + bID + "\nDate and Time: " + dt.getText() + "   "
+                            + time.getText() + "\nBuyer Details:\nName: " + name + "\nContact No.:(+91)" + Phone
+                            + "\nEmail: " + email + "\nAddress: " + address + "\n\n");
                     doc.add(p2);
                     PdfPTable tb1 = new PdfPTable(5);
                     tb1.addCell("Name");
@@ -396,7 +403,7 @@ public class billGenerator extends JFrame implements ActionListener {
                     tb1.addCell("Rate (Rs.)");
                     tb1.addCell("Subtotal");
                     model = (DefaultTableModel) ta1.getModel();
-                    for(int i = 0; i < model.getRowCount(); i++){
+                    for (int i = 0; i < model.getRowCount(); i++) {
                         String p = model.getValueAt(i, 0).toString();
                         String q = model.getValueAt(i, 1).toString();
                         String r = model.getValueAt(i, 2).toString();
@@ -407,7 +414,6 @@ public class billGenerator extends JFrame implements ActionListener {
                         tb1.addCell(r);
                         tb1.addCell(s);
                         tb1.addCell(t);
-
                         try {
                             String qwry2 = "select co.aq from commodities co,crops c where c.id in(select id from crops where cName = '"+ p +"') and co.id = c.id";
                             ResultSet rs2 = c.s.executeQuery(qwry2);
@@ -425,24 +431,26 @@ public class billGenerator extends JFrame implements ActionListener {
                         
                     }
                     doc.add(tb1);
-                    Paragraph p3 = new Paragraph("\nTotal: "+t11.getText()+"\nPaid Amount: "+t12.getText()+"\nReturned Amount: "+t13.getText());
-                    Paragraph p4 = new Paragraph("\n\n*******************************Thanks for your Visit.Visit Again*******************************\nHead:\nArnav Kashyap");
+                    Paragraph p3 = new Paragraph("\nTotal: " + t11.getText() + "\nPaid Amount: " + t12.getText()
+                            + "\nReturned Amount: " + t13.getText());
+                    Paragraph p4 = new Paragraph(
+                            "\n\n*******************************Thanks for your Visit.Visit Again*******************************\nHead:\nArnav Kashyap");
                     doc.add(p3);
                     doc.add(p4);
                     doc.close();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
+
                 } catch (DocumentException e) {
                     e.printStackTrace();
                 }
-            
 
                 model = (DefaultTableModel) ta1.getModel();
-                while(model.getRowCount() != 0){
+                while (model.getRowCount() != 0) {
                     model.removeRow(0);
                 }
                 ps.clearBatch();
-                
+
                 t1.setText("");
                 t2.setText("");
                 t3.setText("");
@@ -453,25 +461,25 @@ public class billGenerator extends JFrame implements ActionListener {
                 t13.setText("");
 
             } catch (SQLException e) {
-				e.printStackTrace();
+                System.out.println(e);
             }
             JOptionPane.showMessageDialog(this, "Bill Generated");
         });
         img.add(b2);
 
         ImageIcon ii5 = new ImageIcon(getClass().getResource("\\Icons\\reset.png"));
-        b3 = new JButton("Reset",ii5);
+        b3 = new JButton("Reset", ii5);
         b3.setBackground(Color.BLACK);
         b3.setForeground(Color.white);
         b3.setBounds(870, 565, 100, 30);
         b3.addActionListener(ae -> {
-          this.setVisible(false);
-          new billGenerator().setVisible(true);
+            this.setVisible(false);
+            new billGenerator().setVisible(true);
         });
         img.add(b3);
 
         ImageIcon ii6 = new ImageIcon(getClass().getResource("\\Icons\\close.png"));
-        b4 = new JButton("Cancel",ii6);
+        b4 = new JButton("Cancel", ii6);
         b4.setBackground(Color.BLACK);
         b4.setForeground(Color.white);
         b4.setBounds(870, 625, 100, 30);

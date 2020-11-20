@@ -32,7 +32,7 @@ public class showFarmers extends JFrame implements ActionListener{
         ta1.getColumnModel().getColumn(7).setPreferredWidth(70);
         pane.setBounds(30, 40, 740, 580);
         add(pane);
-
+        
         show = new JButton("Show");
         show.setBackground(Color.black);
         show.setForeground(Color.white);

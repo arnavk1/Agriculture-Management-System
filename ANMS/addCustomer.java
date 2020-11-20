@@ -1,142 +1,224 @@
 package ANMS;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.awt.event.*;
-import java.sql.ResultSet;
+import java.awt.*;
+import java.sql.*;
 
-public class addCustomer extends JFrame implements ActionListener{
-    JTable ta1;
-    DefaultTableModel tm;
-    JScrollPane pane;
-    JButton update, cancel;
-    JLabel id, idNo, name, age, gender, phone, email, address;
-    JTextField nameT, ageT, genderT, phoneT, emailT, addressT;
+public class addCrop extends JFrame implements ActionListener {
 
-    addCustomer(){
-        ImageIcon img1 = new ImageIcon(getClass().getResource("\\Icons\\addCustomer.jpg"));
-        Image img2 = img1.getImage().getScaledInstance(450, 350, Image.SCALE_DEFAULT);
-        JLabel bgImg = new JLabel(new ImageIcon(img2));
-        bgImg.setBounds(350, 200, 450,350);
-        add(bgImg);
+    JLabel l1, l2, l3, l4, l5, l6, l7, l8, l9, tag, tagNo;
+    JTextField t1, t2, t3, t4, t5, t6;
+    JButton b1, b2;
+    JComboBox cb1;
+    JCheckBox c1;
+    Choice c2,c3;
 
-        JLabel head = new JLabel("Add Customers");
-        head.setFont(new Font("Tahoma", Font.BOLD, 25));
-        head.setBounds(300, 5, 200, 30);
-        add(head);
+    addCrop() {
 
-        id = new JLabel("ID");
-        id.setFont(new Font("Tahoma", Font.BOLD, 18));
-        id.setBounds(30, 100, 30, 30);
-        add(id);
+        ImageIcon i = new ImageIcon(getClass().getResource("\\Icons\\addCrops.jpg"));
+        Image i1 = i.getImage().getScaledInstance(1000, 700, Image.SCALE_DEFAULT);
+        JLabel img = new JLabel(new ImageIcon(i1));
+        img.setBounds(0, 0, 1000, 700);
+        add(img);
 
-        idNo = new JLabel("");
-        idNo.setFont(new Font("Tahoma", Font.BOLD, 18));
-        idNo.setBounds(160, 100, 200, 30);
+        l1 = new JLabel("Add Crops");
+        l1.setBounds(40, 40, 300, 30);
+        l1.setFont(new Font("Tahoma", Font.BOLD, 23));
+        l1.setForeground(Color.white);
+        img.add(l1);
+
+        l2 = new JLabel("ID");
+        l2.setBounds(113, 120, 100, 30);
+        l2.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        l2.setForeground(Color.white);
+        img.add(l2);
+
+        tag = new JLabel("C-");
+        tag.setBounds(250, 120, 100, 30);
+        tag.setFont(new Font("Tahoma", Font.BOLD, 18));
+        tag.setForeground(Color.white);
+        img.add(tag);
+
+        tagNo = new JLabel();
+        tagNo.setBounds(275, 120, 100, 30);
+        tagNo.setFont(new Font("Tahoma", Font.BOLD, 18));
+        tagNo.setForeground(Color.white);
+        img.add(tagNo);
+
+        try {
+            int idNo = 1001;
+            String str1 = String.valueOf(idNo);
+            tagNo.setText(str1);
+            conn c = new conn();
+            ResultSet rs = c.s.executeQuery("select max(id) from crops");
+            while(rs.next()){
+                idNo = rs.getInt(1);
+                idNo += 1;
+                String str = String.valueOf(idNo);
+                tagNo.setText(str);
+            }
+        } catch (Exception e) {}
+
+
+        l3 = new JLabel("Type");
+        l3.setBounds(113, 180, 100, 30);
+        l3.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        l3.setForeground(Color.white);
+        img.add(l3);
+
+        c2 = new Choice();
         try {
             conn c = new conn();
-            ResultSet rs = c.s.executeQuery("select max(id) from customer");
-            rs.next();
-            idNo.setText(String.valueOf(Integer.parseInt(rs.getString(1))+1));
+            String qry = "Select * from croptype";
+            ResultSet rs = c.s.executeQuery(qry);
+            while (rs.next()) {
+                c2.add(rs.getString("type"));
+            }
         } catch (Exception e) {
-            //TODO: handle exception
         }
-        add(idNo);
+        c2.setBounds(250, 180, 190, 30);
+        img.add(c2);
 
-        name = new JLabel("Name");
-        name.setFont(new Font("Tahoma", Font.BOLD, 18));
-        name.setBounds(30, 160, 120, 30);
-        add(name);
+        c1 = new JCheckBox();
+        c1.setBounds(430, 180, 20, 20);
+        c1.addActionListener(this);
+        img.add(c1);
 
-        nameT = new JTextField();
-        nameT.setBounds(160, 160, 150, 30);
-        add(nameT);
+        l4 = new JLabel("Sowed In");
+        l4.setBounds(113, 240, 100, 30);
+        l4.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        l4.setForeground(Color.white);
+        img.add(l4);
 
-        age = new JLabel("Age");
-        age.setFont(new Font("Tahoma", Font.BOLD, 18));
-        age.setBounds(30, 220, 120, 30);
-        add(age);
+        t2 = new JTextField();
+        t2.setBounds(250, 240, 150, 30);
+        t2.setEditable(false);
+        img.add(t2);
 
-        ageT = new JTextField();
-        ageT.setBounds(160, 220, 150, 30);
-        add(ageT);
+        l5 = new JLabel("Harvested In");
+        l5.setBounds(113, 300, 120, 30);
+        l5.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        l5.setForeground(Color.white);
+        img.add(l5);
 
-        gender = new JLabel("Gender");
-        gender.setFont(new Font("Tahoma", Font.BOLD, 18));
-        gender.setBounds(30, 280, 120, 30);
-        add(gender);
+        t3 = new JTextField();
+        t3.setBounds(250, 300, 150, 30);
+        t3.setEditable(false);
+        img.add(t3);             
 
-        genderT = new JTextField();
-        genderT.setBounds(160, 280, 150, 30);
-        add(genderT);
+        l9 = new JLabel("Crop Variety");
+        l9.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        l9.setForeground(Color.white);
+        l9.setBounds(113, 360, 120, 30);
+        img.add(l9);
 
-        phone = new JLabel("Phone No.");
-        phone.setFont(new Font("Tahoma", Font.BOLD, 18));
-        phone.setBounds(30, 340, 120, 30);
-        add(phone);
+        cb1 = new JComboBox(new String[] {"Vegetable","Fruits","Crops","Seeds"});
+        cb1.setBackground(Color.white);
+        cb1.setBounds(250, 360, 150, 30);
+        img.add(cb1);
 
-        phoneT = new JTextField();
-        phoneT.setBounds(160, 340, 150, 30);
-        add(phoneT);
+        l6 = new JLabel("Crop Name");
+        l6.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        l6.setForeground(Color.white);
+        l6.setBounds(113, 420, 120, 30);
+        img.add(l6);
 
-        email = new JLabel("Email");
-        email.setFont(new Font("Tahoma", Font.BOLD, 18));
-        email.setBounds(30, 400, 120, 30);
-        add(email);
+        t4 = new JTextField();
+        t4.setBounds(250, 420, 150, 30);
+        img.add(t4);
 
-        emailT = new JTextField();
-        emailT.setBounds(160, 400, 150, 30);
-        add(emailT);
+        l7 = new JLabel("Fertilizer Used");
+        l7.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        l7.setForeground(Color.white);
+        l7.setBounds(113, 480, 120, 30);
+        img.add(l7);
 
-        address = new JLabel("Address");
-        address.setFont(new Font("Tahoma", Font.BOLD, 18));
-        address.setBounds(30, 460, 120, 30);
-        add(address);
+        c3 = new Choice();
+        try {
+            conn cc = new conn();
+            String qry3 = "Select * from addFert";
+            ResultSet rs3 = cc.s.executeQuery(qry3);
+            while(rs3.next()){
+                c3.add(rs3.getString("type"));
+            }
+        } catch (Exception e) {}
+        c3.setBounds(250, 480, 190, 30);
+        img.add(c3);
 
-        addressT = new JTextField();
-        addressT.setBounds(160, 460, 150, 30);
-        add(addressT);
-        
+        l8 = new JLabel("Price");
+        l8.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        l8.setForeground(Color.white);
+        l8.setBounds(113, 540, 120, 30);
+        img.add(l8);
 
-        update = new JButton("Update");
-        update.setBackground(Color.black);
-        update.setForeground(Color.white);
-        update.setBounds(120, 550, 150, 40);
-        update.addActionListener(this);
-        add(update);
-        
-        cancel = new JButton("Cancel");
-        cancel.setBackground(Color.black);
-        cancel.setForeground(Color.white);
-        cancel.setBounds(120, 630, 150, 40);
-        cancel.addActionListener(this);
-        add(cancel);
+        t5 = new JTextField();
+        t5.setBounds(250, 540, 150, 30);
+        img.add(t5);
 
+        b1 = new JButton("ADD");
+        b1.setBackground(Color.black);
+        b1.setForeground(Color.white);
+        b1.addActionListener(this);
+        b1.setBounds(113, 600, 130, 30);
+        img.add(b1);
 
-        getContentPane().setBackground(Color.WHITE);
+        b2 = new JButton("CANCEL");
+        b2.setBackground(Color.black);
+        b2.setForeground(Color.white);
+        b2.setBounds(270, 600, 130, 30);
+        b2.addActionListener(this);
+        img.add(b2);
 
         setUndecorated(true);
         setLayout(null);
-        setBounds(680, 100, 800, 700);
+        setBounds(480, 100, 1000, 700);
         setVisible(true);
     }
     public static void main(String[] args) {
-        new addCustomer();
+        new addCrop().setVisible(true);
     }
-
     @Override
     public void actionPerformed(ActionEvent ae) {
-        if(ae.getSource() == update){
-            conn c = new conn();
-            String qwry = "insert into customer values('"+idNo.getText()+"','"+nameT.getText()+"','"+ageT.getText()+"','"+genderT.getText()+"','"+phoneT.getText()+"','"+emailT.getText()+"','"+addressT.getText()+"')";
+        if(ae.getSource() == c1){
+            if (c1.isSelected()) {
+                String type = c2.getSelectedItem();
+                conn c = new conn();
+                String qry1 = "Select * from croptype where type = '"+type+"'";
+                ResultSet rs1;
+                try {
+                    rs1 = c.s.executeQuery(qry1);
+                    while(rs1.next()){
+                        t2.setText(""+rs1.getString(2));
+                        t3.setText(""+rs1.getString(3));
+                    }
+                } catch (SQLException e) {}
+            } else{
+                t2.setText("");
+                t3.setText("");
+            }
+        } else if(ae.getSource() == b1){
+            String id = tagNo.getText();
+            String type = (String)c2.getSelectedItem();
+            String sIn = t2.getText();
+            String hIn = t3.getText();
+            String variety = (String) cb1.getSelectedItem();
+            String cName = t4.getText();
+            String fUsed = (String)c3.getSelectedItem();
+            String price = t5.getText();
+            String qwry = "insert into crops values('"+id+"','"+type+"','"+sIn+"','"+hIn+"','"+variety+"','"+cName+"','"+fUsed+"','"+price+"')";
+            String qwry2 = "insert into commodities values('"+ id + "','" + 0 + "')";
             try {
+                conn c = new conn();
                 c.s.executeUpdate(qwry);
-                JOptionPane.showMessageDialog(this, "Employee Added Successfuly");
-                setVisible(false);
-            } catch (Exception e) {System.out.println(e);}
-        } else if (ae.getSource() == cancel){
+                c.s.executeUpdate(qwry2);
+                JOptionPane.showMessageDialog(this, "New Crop Has been added");
+                this.setVisible(false);
+            } catch (Exception e) {} 
+        } else if(ae.getSource() == b2){
             this.setVisible(false);
         }
+
     }
+    
 }

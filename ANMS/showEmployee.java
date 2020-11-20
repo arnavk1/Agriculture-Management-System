@@ -25,8 +25,10 @@ public class showEmployee extends JFrame implements ActionListener{
         tm.addColumn("Address");
         ta1 = new JTable(tm);
         pane = new JScrollPane(ta1);
-        ta1.getColumnModel().getColumn(0).setPreferredWidth(30);
+        ta1.getColumnModel().getColumn(0).setPreferredWidth(60);
         ta1.getColumnModel().getColumn(2).setPreferredWidth(30);
+        ta1.getColumnModel().getColumn(3).setPreferredWidth(50);
+        ta1.getColumnModel().getColumn(4).setPreferredWidth(30);
         ta1.getColumnModel().getColumn(5).setPreferredWidth(30);
         pane.setBounds(30, 40, 740, 580);
         add(pane);
