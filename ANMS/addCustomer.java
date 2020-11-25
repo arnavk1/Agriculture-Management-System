@@ -5,7 +5,7 @@ import java.awt.event.*;
 import java.awt.*;
 import java.sql.*;
 
-public class addCrop extends JFrame implements ActionListener {
+public class addCustomer extends JFrame implements ActionListener {
 
     JLabel l1, l2, l3, l4, l5, l6, l7, l8, l9, tag, tagNo;
     JTextField t1, t2, t3, t4, t5, t6;
@@ -14,7 +14,7 @@ public class addCrop extends JFrame implements ActionListener {
     JCheckBox c1;
     Choice c2,c3;
 
-    addCrop() {
+    addCustomer() {
 
         ImageIcon i = new ImageIcon(getClass().getResource("\\Icons\\addCrops.jpg"));
         Image i1 = i.getImage().getScaledInstance(1000, 700, Image.SCALE_DEFAULT);

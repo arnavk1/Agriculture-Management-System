@@ -390,7 +390,7 @@ public class billGenerator extends JFrame implements ActionListener {
                     PdfWriter.getInstance(doc, new FileOutputStream(path + "" + name + " " + dt.getText() + ".pdf"));
                     doc.open();
                     Paragraph p1 = new Paragraph(
-                            "                                           Agriculture Management System\n                                         Contact Number: (+91)8708212700\n\n");
+                            "                                           Nursery Management System\n                                         Contact Number: (+91)8708212700\n\n");
                     doc.add(p1);
                     Paragraph p2 = new Paragraph("Billing ID: " + bID + "\nDate and Time: " + dt.getText() + "   "
                             + time.getText() + "\nBuyer Details:\nName: " + name + "\nContact No.:(+91)" + Phone
